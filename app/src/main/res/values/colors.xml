@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="twitter_blue">#1DA1F2</color>
+    <color name="copy_green">#27AE60</color>
+    <color name="clear_red">#E74C3C</color>
+    <color name="background_white">#F5F8FA</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="text_primary">#14171A</color>
+    <color name="text_secondary">#657786</color>
+    <color name="text_hint">#AAB8C2</color>
+    <color name="white">#FFFFFF</color>
+</resources>
