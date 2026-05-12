@@ -11,8 +11,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 
 import com.menthalan.twittercounter.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -65,18 +69,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun observeState() {
-        viewModel.uiState.observe(this) { state ->
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    binding.tvTypedCount.text = "${state.typed}/280"
+                    binding.tvRemainingCount.text = state.remaining.toString()
+                    binding.btnPostTweet.isEnabled = state.isPostEnabled && !state.isLoading
+                    binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
 
-            binding.tvTypedCount.text = "${state.typed}/280"
-            binding.tvRemainingCount.text = state.remaining.toString()
-            binding.btnPostTweet.isEnabled = state.isPostEnabled && !state.isLoading
-            binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
-
-            if (state.postSuccess) {
-                Toast.makeText(this, "Tweet Posted!", Toast.LENGTH_SHORT).show()
-                binding.etTweet.setText("")
-                viewModel.clearText()
+                    if (state.postSuccess) {
+                        Toast.makeText(this@MainActivity, "Tweet Posted",
+                            Toast.LENGTH_SHORT).show()
+                        binding.etTweet.setText("")
+                        viewModel.clearText()
+                        viewModel.consumePostResult()
+                    }
+                }
             }
         }
+
     }
 }

@@ -12,14 +12,13 @@ object  TwitterCharacterCounter {
         var lastEnd = 0
 
         for (match in URL_REGEX.findAll(text)) {
-            weightedLength += text.substring(lastEnd, match.range.first).codePointCount(0, match.range.first - lastEnd)
+            weightedLength += text.substring(lastEnd, match.range.first).unicodeLength()
             weightedLength += URL_LENGTH
             lastEnd = match.range.last + 1
         }
 
         if (lastEnd < text.length) {
-            val remaining = text.substring(lastEnd)
-            weightedLength += remaining.codePointCount(0, remaining.length)
+            weightedLength += text.substring(lastEnd).unicodeLength()
         }
 
         return weightedLength
@@ -29,4 +28,6 @@ object  TwitterCharacterCounter {
 
     fun isValid(text: String): Boolean = text.isNotBlank() && count(text) <= MAX_CHARACTERS
 
+
+    private fun String.unicodeLength(): Int = codePointCount(0, length)
 }
