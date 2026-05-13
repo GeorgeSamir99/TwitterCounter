@@ -41,7 +41,7 @@ class TwitterCounterViewModel  @Inject constructor(
         val text = _uiState.value.text ?: return
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
-            val result = tweetPostUseCase.invoke(text)
+            val result = tweetPostUseCase(text)
             _uiState.value = _uiState.value.copy(
                 isLoading = false,
                 postSuccess = result.isSuccess

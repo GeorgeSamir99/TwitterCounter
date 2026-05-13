@@ -14,5 +14,7 @@ import javax.inject.Singleton
 abstract class TwitterDI{
     @Binds
     @Singleton
-    abstract fun provideTwitterRepository(twitterRepoImpl: TwitterRepoImpl): TwitterRepo
+    abstract fun provideTwitterRepository(
+        twitterRepoImpl: TwitterRepoImpl
+    ): TwitterRepo
 }

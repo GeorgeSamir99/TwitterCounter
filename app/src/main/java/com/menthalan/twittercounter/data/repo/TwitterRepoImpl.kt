@@ -5,7 +5,7 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class TwitterRepoImpl @Inject constructor() : TwitterRepo {
-     val MAX_CHARACTERS = 280
+    private  val MAX_CHARACTERS = 280
     private val URL_LENGTH = 23
     private val URL_REGEX = Regex("""https?://\S+""")
     private fun String.unicodeLength(): Int = codePointCount(0, length)
