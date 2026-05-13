@@ -8,19 +8,24 @@ import com.menthalan.twittercounter.data.TwitterRepository
 import com.menthalan.twittercounter.domain.usecase.CountTweetCharactersUseCase
 import com.menthalan.twittercounter.domain.usecase.GetRemainingCharactersUseCase
 import com.menthalan.twittercounter.domain.usecase.ValidateTweetUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TwitterCounterViewModel : ViewModel(){
+@HiltViewModel
+class TwitterCounterViewModel  @Inject constructor(
+    private val repository: TwitterRepository,
+    private val countUseCase: CountTweetCharactersUseCase,
+    private val remainingUseCase: GetRemainingCharactersUseCase,
+    private val validateUseCase: ValidateTweetUseCase
+): ViewModel(){
 
     private val _uiState = MutableStateFlow(TweetUiState())
     val uiState: StateFlow<TweetUiState> = _uiState.asStateFlow()
-    private val repository = TwitterRepository()
-    private val countUseCase = CountTweetCharactersUseCase()
-    private val remainingUseCase = GetRemainingCharactersUseCase()
-    private val validateUseCase = ValidateTweetUseCase()
+
     fun onTextChanged(newText: String) {
         val typed = countUseCase(newText)
         val remaining = remainingUseCase(newText)
