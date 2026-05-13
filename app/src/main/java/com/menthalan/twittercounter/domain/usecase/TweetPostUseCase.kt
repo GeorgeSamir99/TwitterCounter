@@ -1,14 +1,12 @@
 package com.menthalan.twittercounter.domain.usecase
 
-
 import com.menthalan.twittercounter.domain.repo.TwitterRepo
 import javax.inject.Inject
 
-
-class GetRemainingCharactersUseCase @Inject constructor(
+class TweetPostUseCase @Inject constructor(
     private val twitterRepo: TwitterRepo
 ){
-    operator fun invoke(text: String): Int {
-        return twitterRepo.remaining(text)
+    suspend operator fun invoke(text: String): Result<String> {
+        return twitterRepo.postTweet(text)
     }
 }

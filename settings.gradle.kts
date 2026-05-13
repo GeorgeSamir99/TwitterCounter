@@ -24,4 +24,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "TwitterCounter"
 include(":app")
-include(":twitter_counter_utils")

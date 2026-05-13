@@ -1,10 +1,13 @@
 package com.menthalan.twittercounter.domain.usecase
 
-import com.menthalan.twitter_counter_utils.TwitterCharacterCounter
+
+import com.menthalan.twittercounter.domain.repo.TwitterRepo
 import javax.inject.Inject
 
-class CountTweetCharactersUseCase  @Inject constructor() {
+class CountTweetCharactersUseCase  @Inject constructor(
+    private val twitterRepo: TwitterRepo
+) {
     operator fun invoke(text: String): Int {
-        return TwitterCharacterCounter.count(text)
+        return twitterRepo.count(text)
     }
 }

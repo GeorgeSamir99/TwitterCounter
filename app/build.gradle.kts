@@ -46,7 +46,6 @@ dependencies {
 
 
     // Library module
-    implementation(project(":twitter_counter_utils"))
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")

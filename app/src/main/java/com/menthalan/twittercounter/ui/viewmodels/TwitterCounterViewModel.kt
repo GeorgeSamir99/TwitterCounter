@@ -1,12 +1,12 @@
-package com.menthalan.twittercounter.ui
+package com.menthalan.twittercounter.ui.viewmodels
 
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
-import com.menthalan.twittercounter.data.TwitterRepository
 import com.menthalan.twittercounter.domain.usecase.CountTweetCharactersUseCase
 import com.menthalan.twittercounter.domain.usecase.GetRemainingCharactersUseCase
+import com.menthalan.twittercounter.domain.usecase.TweetPostUseCase
 import com.menthalan.twittercounter.domain.usecase.ValidateTweetUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TwitterCounterViewModel  @Inject constructor(
-    private val repository: TwitterRepository,
+    private val tweetPostUseCase: TweetPostUseCase,
     private val countUseCase: CountTweetCharactersUseCase,
     private val remainingUseCase: GetRemainingCharactersUseCase,
     private val validateUseCase: ValidateTweetUseCase
@@ -41,7 +41,7 @@ class TwitterCounterViewModel  @Inject constructor(
         val text = _uiState.value.text ?: return
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
-            val result = repository.postTweet(text)
+            val result = tweetPostUseCase.invoke(text)
             _uiState.value = _uiState.value.copy(
                 isLoading = false,
                 postSuccess = result.isSuccess

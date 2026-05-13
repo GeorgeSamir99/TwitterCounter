@@ -1,21 +1,20 @@
-package com.menthalan.twittercounter.ui
+package com.menthalan.twittercounter.ui.activities
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-
 import com.menthalan.twittercounter.databinding.ActivityMainBinding
+import com.menthalan.twittercounter.ui.viewmodels.TwitterCounterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -55,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnCopy.setOnClickListener {
             val text = viewModel.copyText()
             if (text.isNotBlank()) {
-                val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
                 clipboard.setPrimaryClip(ClipData.newPlainText("tweet", text))
                 Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show()
             }
