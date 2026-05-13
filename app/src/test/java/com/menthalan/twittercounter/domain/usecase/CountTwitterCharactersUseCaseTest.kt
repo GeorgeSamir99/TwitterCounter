@@ -7,14 +7,14 @@ import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
 
-class CountTweetCharactersUseCaseTest {
+class CountTwitterCharactersUseCaseTest {
     private lateinit var twitterRepo: TwitterRepo
-    private lateinit var useCase: CountTweetCharactersUseCase
+    private lateinit var useCase: CountTwitterCharactersUseCase
 
     @Before
     fun setup() {
         twitterRepo = mock()
-        useCase = CountTweetCharactersUseCase(twitterRepo)
+        useCase = CountTwitterCharactersUseCase(twitterRepo)
     }
 
     @Test

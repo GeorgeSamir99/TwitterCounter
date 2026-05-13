@@ -1,13 +1,12 @@
 package com.menthalan.twittercounter.domain.usecase
 
-
 import com.menthalan.twittercounter.domain.repo.TwitterRepo
 import javax.inject.Inject
 
-class ValidateTweetUseCase @Inject constructor(
+class TwitterPostUseCase @Inject constructor(
     private val twitterRepo: TwitterRepo
 ){
-    operator fun invoke(text: String): Boolean {
-        return twitterRepo.isValid(text)
+    suspend operator fun invoke(text: String): Result<String> {
+        return twitterRepo.postTweet(text)
     }
 }
